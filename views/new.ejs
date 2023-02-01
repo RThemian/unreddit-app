@@ -1,12 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <!-- pass title: new post into partials/head -->
+    <%- include('./partials/head', {title: "New Post"}) %>
+
 <body>
-    <h1>New</h1>
+    <%- include('./partials/nav') %>
+    <div class="container">
+    <h1>Make a new post</h1>
+    <form action="/posts" method="POST">
+        <div class="form-group">
+          <label for="user">User</label>
+          <input type="text" name="user" id="user" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" name="title" id="title" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="content">Content</label>
+            <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+          </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      
+    </div>
+
 </body>
 </html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head') %>
+<title>Signup</title>
+<body>
+    <%- include('./partials/nav') %>
+    <<div class="container">
+        <h1 class="mb-3">Sign Up!</h1>
+        <% if(error) { %>
+            <p style="color: red;" class="mb-3"><%= error %></p>
+        <% } %>
+        <form action="/signup" method="POST" class="form-group">
+            <!-- use a post request to add a new user: email and password -->
+            <label for="email" class="form-label">
+                Email:
+            </label>
+            <input type="email" name="email" id="email" class="form-control" required>
+            <label for="password" class="form-label mt-3">
+                Password:
+            </label>
+            <input type="password" name="password" id="password" class="form-control" required>
+            
+            <label for="passwordConf" class="form-label mt-3">
+                Password Confirmation:
+            </label>
+            <input type="password" name="passwordConf" id="passwordConf" class="form-control" required>
+            
+            <button type="submit" class="btn btn-primary mt-3">Sign Up</button>
+        </form>
+    </div>
+    
+     
+</body>
+</html>
