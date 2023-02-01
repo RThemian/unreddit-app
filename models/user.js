@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 
 const userSchema = new Schema({
-    email: String,
-    password: String,
+    email: {type: String, required: true, unique: true},
+    password: {type: String, required: true},
     //avatar will be a 3rd party service API like gravatar
     avatar: String,
     posts: [{

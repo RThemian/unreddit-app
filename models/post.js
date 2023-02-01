@@ -10,7 +10,7 @@ const postSchema = new Schema({
     upvotes: Number,
     downvotes: Number,
     // image will be a 3rd party service API like cloudinary
-    imageLink: {
+    imageRelated: {
         type: String,
         default: 'https://res.cloudinary.com/ds6pu1vmi/image/upload/v1674694775/omnyy7rbtrskycbkwswi.jpg'
       },

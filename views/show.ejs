@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<%- include('partials/head') %>
 <body>
-    <h1>Show</h1>
+    <%- include('partials/nav') %>
+    <div class="container">
+        <h1 class="display-4 text-center my-5"><%= post.title %></h1>
+        <div class="card mb-3 align-items-center bg-dark text-white">
+          <img src="<%= post.imageRelated %>" class="card-img-top w-25 rounded mt-3" alt="post image">
+          <div class="card-body">
+            <h5 class="card-title text-center font-weight-bold">Author: <%= post.author %></h5>
+            <p class="card-text text-justify"><%= post.content %></p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="badge badge-success p-2">Upvotes: <%= post.upvotes %></span>
+              <span class="badge badge-danger p-2">Downvotes: <%= post.downvotes %></span>
+            </div>
+          </div>
+        </div>
+      </div>
 </body>
 </html>
