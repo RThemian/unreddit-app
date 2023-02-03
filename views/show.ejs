@@ -14,6 +14,12 @@
               <span class="badge badge-success p-2">Upvotes: <%= post.upvotes %></span>
               <span class="badge badge-danger p-2">Downvotes: <%= post.downvotes %></span>
             </div>
+            <!-- add edit and delete buttons -->
+            <div class="d-flex justify-content-around align-items-center">
+              <a href="/posts/<%= post._id %>/edit" class="btn btn-warning">Edit</a>
+              <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
           </div>
         </div>
       </div>

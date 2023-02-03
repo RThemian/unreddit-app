@@ -83,3 +83,34 @@
         //         res.redirect('/posts'); // redirect to the books index page
         //     })
         // });
+
+
+        // update route
+router.put("/posts/:id", (req, res) => {
+   
+  Post.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      (err, updatedPost) => {
+          res.redirect('/posts/')
+      }
+  )
+})
+
+<li class="nav-item">
+<a class="nav-link text-white" href="/posts">See Post History</a>
+</li>
+<li class="nav-item">
+<a class="nav-link text-white" href="/posts/new">Add a Post</a>
+</li>
+<li class="nav-item">
+<a class="nav-link text-white" href="/logout">Log Out</a>
+</li>
+<li class="nav-item">
+<a class="nav-link text-white" href="/signup">Sign Up</a>
+</li>
+<li class="nav-item">
+<a class="nav-link text-white" href="/login">Log In</a>
+</li>
+</ul>
+</nav>

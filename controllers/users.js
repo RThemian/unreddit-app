@@ -63,8 +63,10 @@ router.post('/login', (req, res) => {
     // session is an object that is stored in the database
     // create a session for the authenticated user
     req.session.userId = foundUser._id; // this is the id of the user in the database that is logged in 
+    // get the email of the user that is logged in
+    req.session.email = foundUser.email;    
     // 2.2 if the passwords match, redirect to the books index page
-    res.redirect('/posts');
+    res.redirect(302,'/posts');
     });
 });
     

@@ -39,20 +39,35 @@ router.delete("/posts/:id", (req, res) => {
 })
 
 // update route
-router.put("/posts/:id", (req, res) => {
-   
-    Post.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        (err, updatedPost) => {
-            res.redirect('/posts/')
-        }
-    )
-})
+router.put('/posts/:id', (req, res) => {
+    // upload image to cloudinary
+    if (req.files) {
+      const imageRelated = req.files.imageRelated;
+      imageRelated.mv(`./uploads/${imageRelated.name}`);
+      
+      const fs = require('fs');
+      const path = require('path');
+      const projectRoot = path.resolve(__dirname, '..');
+      
+      cloudinary.uploader.upload(`./uploads/${imageRelated.name}`, (err, result) => {
+          req.body.imageRelated = result.secure_url;
+          Post.findByIdAndUpdate(req.params.id, req.body, (err, updatedPost) => {
+              fs.unlink(`${projectRoot}/uploads/${imageRelated.name}`, (err) => {
+                  res.redirect('/posts'); // redirect to the posts index page
+              })
+          });
+      });
+    } else {
+      Post.findByIdAndUpdate(req.params.id, req.body, (err, updatedPost) => {
+        res.redirect('/posts'); // redirect to the posts index page
+      });
+    }
+  });
+  
+
+
 
 // create route
-
-  
   router.post('/posts', (req, res) => {
     // upload image to cloudinary
     const imageRelated = req.files.imageRelated;

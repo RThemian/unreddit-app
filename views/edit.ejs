@@ -1,9 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- use ejs to bring in head from partial -->
-<%- include('./partials/head') %>
+    <!-- pass title: edit post into partials/head -->
+    <%- include('./partials/head', {title: "Edit Post"}) %>
 <body>
     <%- include('./partials/nav') %>
-    <h1>Edit</h1>
+    <div class="container">
+    <h1>Edit a post</h1>
+    <form action="/posts/<%= post._id %>?_method=PUT" method="POST" enctype="multipart/form-data" autocomplete="off">
+               <div class="form-group">
+          <label for="author">Author</label>
+          <input type="text" name="author" id="author" class="form-control" value="<%= post.author %>">
+        </div>
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" name="title" id="title" class="form-control" value="<%= post.title %>">
+        </div>
+        <div class="form-group">
+            <label for="content">Content</label>
+            <textarea name="content" id="content" class="form-control" rows="10"><%= post.content %></textarea>
+          </div>
+          <div class="form-group m-0 p-0">
+            <label for="imageRelated">Edit Related Image: Current Image</label>
+            <!-- display current imageRelated -->
+            <img src="<%= post.imageRelated %>" alt="<%= post.imageRelated %>" class ="img-fluid">
+            <input type="file" name="imageRelated" id="imageRelated" class="form-control">
+          </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </form>
+      
+    </div>
 </body>
 </html>
