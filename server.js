@@ -54,7 +54,7 @@ app.use(fileUpload({createParentPath: true}));
 
 app.use((req, res, next) => {
     // custom middleware to inspect the session
-    console.log(req.session);
+    console.log(req.session.email);
     next(); // this is a middleware function that will run on every request and log the session to the console, runs the next function in the middleware stack
 
 });
@@ -62,8 +62,8 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
     // custom middleware to inspect the session
     if(req.session.userId) {
+        //res.locals.user = req.session.userId;
         res.locals.user = req.session.userId;
-
     } else {
         res.locals.user = null;
     }
@@ -83,64 +83,6 @@ app.get('/', (req, res) => {
     res.render('home.ejs');
 });
 
-// make a seed route
-
-// app.get('/posts/seed', (req, res) => {
-//     // use the data from data.js but first delete any posts that already exist from data.js
-//     Post.deleteMany({}, (err, data) => {
-//         Post.create(posts, (err, data) => {
-//             res.redirect('/posts');
-//         });
-//     });
-// });
-
-    
-
-//index page -- dashboard
-// app.get('/posts', (req, res) => {
-//     Post.find({}, (err, allPosts) => {
-        
-//         res.render("index.ejs", {
-//             posts: allPosts
-//             })
-//     })
-// })
-
-
-// new
-
-// app.get('/posts/new', (req, res) => {
-//     res.render('new.ejs');
-// });
-
-// delete
-// app.post('/posts/:id', (req, res) => {
-//     Post.findByIdAndRemove(req.params.id, (err, data) => {
-//         res.redirect('/posts');
-//     });
-// });
-
-// update
-// app.put('/posts/:id', (req, res) => {
-//     res.redirect('/posts');
-// });
-
-// edit
-// app.get('/posts/:id/edit', (req, res) => {
-//     res.render('edit.ejs');
-// });
-
-// show
-// app.get('/posts/:id', (req, res) => {
-//     Post.findById(req.params.id, (err, foundPost) => {
-//         if (err) {
-//             console.log(err);
-//             res.redirect('/posts');
-//         } else {
-//             res.render('show.ejs', { post: foundPost });
-//         }
-//     });
-// });
 
 
 
