@@ -54,67 +54,23 @@ router.put("/posts/:id", (req, res) => {
 
   
   router.post('/posts', (req, res) => {
-
-    
     // upload image to cloudinary
-    const imageRelated = req.body.imageRelated;
+    const imageRelated = req.files.imageRelated;
     imageRelated.mv(`./uploads/${imageRelated.name}`);
-    const fs = require('fs');
-const path = require('path');
-const projectRoot = path.join(__dirname, '..');
-
-    cloudinary.uploader.upload(imageRelated, (error, result) => {
-      if (error) {
-        // handle error
-        return res.status(500).send(error);
-      }
-      req.body.imageRelated = result.secure_url;
-      
-      // add the image URL to the post data
-      const postData = {
-        author: req.body.author,
-        title: req.body.title,
-        content: req.body.content,
-        imageRelated: result.secure_url
-      };
-
-
-      
-      
-      // create the post
-      Post.create(postData, (err, createdPost) => {
-        if (err) {
-          // handle error
-          return res.status(500).send(err);
-        }
-        console.log(createdPost);
-        res.redirect('/posts');
-      });
-    });
-  });
-  
-  
-  
-  
-  
-  
-
-
-    // const imageRelated = req.files.imageRelated;
-    // imageRelated.mv(`./uploads/${imageRelated.name}`);
     
-    // const fs = require('fs');
-    // const path = require('path');
-    // const projectRoot = path.resolve(__dirname, '..');
-
-    // cloudinary.uploader.upload(`./uploads/${imageRelated.name}`, (err, result) => {
-        // req.body.imageRelated = result.secure_url;
-        // Post.create(req.body, (err, createdPost) => {
-        //     // fs.unlink(`${projectRoot}/uploads/${imageRelated.name}`, (err) => {
-        //         res.redirect('/posts'); // redirect to the books index page
-        //     })
-        // });
-
+    const fs = require('fs');
+    const path = require('path');
+    const projectRoot = path.resolve(__dirname, '..');
+    
+    cloudinary.uploader.upload(`./uploads/${imageRelated.name}`, (err, result) => {
+        req.body.imageRelated = result.secure_url;
+        Post.create(req.body, (err, createdPost) => {
+            fs.unlink(`${projectRoot}/uploads/${imageRelated.name}`, (err) => {
+                res.redirect('/posts'); // redirect to the posts index page
+            })
+        });
+    });
+});
 
 
 // edit route
