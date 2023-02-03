@@ -9,20 +9,21 @@
     <h1>Make a new post</h1>
     <form action="/posts" method="POST">
         <div class="form-group">
-          <label for="user">User</label>
-          <input type="text" name="user" id="user" class="form-control">
+          <label for="user">Author</label>
+          <input type="text" name="author" id="author" class="form-control">
         </div>
         <div class="form-group">
           <label for="title">Title</label>
           <input type="text" name="title" id="title" class="form-control">
         </div>
-        <div class="form-group">
-          <label for="imageRelated">Related Image</label>
-          <input type="file" name="title" id="title" class="form-control">
-        </div>
+        
         <div class="form-group">
             <label for="content">Content</label>
             <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="imageRelated">Add Related Image</label>
+            <input type="file" name="imageRelated" id="imageRelated" class="form-control">
           </div>
         <br>
         <button type="submit" class="btn btn-primary">Submit</button>

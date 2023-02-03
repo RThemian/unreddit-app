@@ -7,9 +7,9 @@ const Post = require('./models/post.js');
 const cloudinary = require('cloudinary');
 
 const fileUpload = require('express-fileupload');
-const userRouter = require('./controllers/users.js');
+const usersRouter = require('./controllers/users.js');
 
-const postRouter = require('./controllers/posts.js');
+const postsRouter = require('./controllers/posts.js');
 
 // dotenv
 require('dotenv').config();
@@ -19,9 +19,9 @@ const app = express();
 
 
 cloudinary.config({ 
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_API_SECRET 
   });
 
 
@@ -144,8 +144,8 @@ app.get('/', (req, res) => {
 
 
 
-app.use(userRouter);
-app.use(postRouter);
+app.use(usersRouter);
+app.use(postsRouter);
 
 const PORT = process.env.PORT;
 // listen for requests

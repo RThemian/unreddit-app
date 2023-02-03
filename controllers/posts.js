@@ -3,7 +3,7 @@ const express = require('express');
 const Post = require("../models/post.js");
 const cloudinary = require('cloudinary').v2;
 const router = express.Router();
-
+require('dotenv').config();
 // seed route
 const data = require('../data');
 
@@ -45,29 +45,77 @@ router.put("/posts/:id", (req, res) => {
         req.params.id,
         req.body,
         (err, updatedPost) => {
-            res.redirect(`/posts/`)
+            res.redirect('/posts/')
         }
     )
 })
 
 // create route
-router.post('/posts', (req, res) => {
+
+  
+  router.post('/posts', (req, res) => {
+
     
-    console.log(req.files);
+    // upload image to cloudinary
+    const imageRelated = req.body.imageRelated;
+    imageRelated.mv(`./uploads/${imageRelated.name}`);
+    const fs = require('fs');
+const path = require('path');
+const projectRoot = path.join(__dirname, '..');
 
-    const imageRelated = req.files.imageRelated;
-   imageRelated.mv(`./uploads/${imageRelated.name}`);
+    cloudinary.uploader.upload(imageRelated, (error, result) => {
+      if (error) {
+        // handle error
+        return res.status(500).send(error);
+      }
+      req.body.imageRelated = result.secure_url;
+      
+      // add the image URL to the post data
+      const postData = {
+        author: req.body.author,
+        title: req.body.title,
+        content: req.body.content,
+        imageRelated: result.secure_url
+      };
 
-    cloudinary.uploader.upload(`./uploads/${imageRelated.name}`, (err, result) => {
-        console.log(err, result);
 
-        req.body.imageRelated = result.secure_url;
+      
+      
+      // create the post
+      Post.create(postData, (err, createdPost) => {
+        if (err) {
+          // handle error
+          return res.status(500).send(err);
+        }
+        console.log(createdPost);
+        res.redirect('/posts');
+      });
+    });
+  });
+  
+  
+  
+  
+  
+  
 
-        Post.create(req.body, (err, createdPost) => {
-            res.redirect("/posts")
-        });
-    })
-})
+
+    // const imageRelated = req.files.imageRelated;
+    // imageRelated.mv(`./uploads/${imageRelated.name}`);
+    
+    // const fs = require('fs');
+    // const path = require('path');
+    // const projectRoot = path.resolve(__dirname, '..');
+
+    // cloudinary.uploader.upload(`./uploads/${imageRelated.name}`, (err, result) => {
+        // req.body.imageRelated = result.secure_url;
+        // Post.create(req.body, (err, createdPost) => {
+        //     // fs.unlink(`${projectRoot}/uploads/${imageRelated.name}`, (err) => {
+        //         res.redirect('/posts'); // redirect to the books index page
+        //     })
+        // });
+
+
 
 // edit route
 router.get("/posts/:id/edit", (req, res) => {
